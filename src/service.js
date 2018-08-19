@@ -1,7 +1,7 @@
 import store from 'store';
 
 
-class TodoService {
+export default class TodoService {
     static NAMESPACE = 'todo::' // prefix 用于区分业务的前缀
     todos = []
 
@@ -14,5 +14,6 @@ class TodoService {
 
         this.todos.push(todo);
         store.set(todo.key, todo);
+        return todo;
     }
 }
