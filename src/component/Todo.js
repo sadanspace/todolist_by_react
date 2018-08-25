@@ -1,9 +1,10 @@
 import { Checkbox } from 'antd';
-import { Col, Row } from 'antd';
+import { Card, Col, Row } from 'antd';
 import React from 'react';
 import 'antd/lib/col/style';
 import 'antd/lib/row/style';
 import 'antd/lib/checkbox/style';
+import 'antd/lib/card/style';
 
 
 export default props => (
