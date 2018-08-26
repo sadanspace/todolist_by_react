@@ -1,5 +1,5 @@
 import store from 'store';
-import {observable} from 'mobx';
+import { observable } from 'mobx';
 
 
 export default class TodoService {
@@ -10,12 +10,22 @@ export default class TodoService {
     load() {
         store.each((value, key) => {
             if (key.startsWith(TodoService.NAMESPACE))
-                this.todos.set(key, value);
+                this._todos.set(key, value);
         });
     }
 
     static NAMESPACE = 'todo::' // prefix 用于区分业务的前缀
-    @observable todos = new Map();
+    _todos = new Map();
+    @observable changed = 0;
+    @observable filter = 'uncompleted';
+
+    get todos() {
+        return [...this._todos.values()].filter(item => {
+            return (this.filter === "all") ||
+                (this.filter === 'completed' && item.completed === true) ||
+                (this.filter === 'uncompleted' && item.completed === false) ? true : false;
+        })
+    };
 
     create(title) {
         const todo = {
@@ -25,25 +35,25 @@ export default class TodoService {
         };
 
         // 存储todo
-        this.todos.set(todo.key, todo);
+        this._todos.set(todo.key, todo);
         // 持久化todo
         store.set(todo.key, todo);
         console.log('create todo');
 
-        let temp = this.todos;
-        this.todos = {};
-        this.todos = temp;
+        this.changed = (new Date()).valueOf() + Math.random();
         return todo;
     }
 
     setTodoState(checked, key) {
-        let todo = this.todos.get(key);
+        let todo = this._todos.get(key);
         if (todo) {
             todo.completed = checked;
             store.set(key, todo);
         }
-        let temp = this.todos;
-        this.todos = {};
-        this.todos = temp;
+        this.changed = (new Date()).valueOf() + Math.random();
+    }
+
+    setFilterState(value) {
+        this.filter = value;
     }
 }

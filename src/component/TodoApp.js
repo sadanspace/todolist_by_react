@@ -9,7 +9,6 @@ import {observer} from 'mobx-react';
 export default class Root extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { filter: 'uncompleted'};
   }
 
   handleCreate(event) {
@@ -21,18 +20,14 @@ export default class Root extends React.Component {
   }
 
   handleCondChange(value) {
-    this.setState({filter: value})
+    this.props.service.setFilterState(value);
   }
 
   render() {
     return <div>
-      <Create onCreate={this.handleCreate.bind(this)} />
+      <Create _={this.props.service.changed} onCreate={this.handleCreate.bind(this)} />
       <Filter onFilter={this.handleCondChange.bind(this)}/>
-      {[...this.props.service.todos.values()].filter( item => {
-        return (this.state.filter === "all") || 
-        (this.state.filter === 'completed' && item.completed === true) ||  
-        (this.state.filter === 'uncompleted' && item.completed === false) ? true : false;
-      }).
+      {this.props.service.todos.
       map(item => <Todo key={item.key} todo={item} onChange={this.handleCheckedChange.bind(this)} />)}
     </div>;
   }
