@@ -1,4 +1,5 @@
 import store from 'store';
+import {observable} from 'mobx';
 
 
 export default class TodoService {
@@ -14,7 +15,7 @@ export default class TodoService {
     }
 
     static NAMESPACE = 'todo::' // prefix 用于区分业务的前缀
-    todos = new Map();
+    @observable todos = new Map();
 
     create(title) {
         const todo = {
@@ -28,6 +29,10 @@ export default class TodoService {
         // 持久化todo
         store.set(todo.key, todo);
         console.log('create todo');
+
+        let temp = this.todos;
+        this.todos = {};
+        this.todos = temp;
         return todo;
     }
 
@@ -37,5 +42,8 @@ export default class TodoService {
             todo.completed = checked;
             store.set(key, todo);
         }
+        let temp = this.todos;
+        this.todos = {};
+        this.todos = temp;
     }
 }
