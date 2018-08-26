@@ -1,5 +1,5 @@
 import store from 'store';
-import { observable } from 'mobx';
+import { observable, computed} from 'mobx';
 
 
 export default class TodoService {
@@ -14,16 +14,23 @@ export default class TodoService {
         });
     }
 
+    static STATE = {
+        all: "all",
+        completed: "completed",
+        uncompleted: "uncompleted"
+    };
+
     static NAMESPACE = 'todo::' // prefix 用于区分业务的前缀
     _todos = new Map();
     @observable changed = 0;
-    @observable filter = 'uncompleted';
+    @observable filter = TodoService.STATE.uncompleted;
 
-    get todos() {
+    @computed get todos() { //getter
+        this.changed;
         return [...this._todos.values()].filter(item => {
-            return (this.filter === "all") ||
-                (this.filter === 'completed' && item.completed === true) ||
-                (this.filter === 'uncompleted' && item.completed === false) ? true : false;
+            return (this.filter === TodoService.STATE.all) ||
+                (this.filter === TodoService.STATE.completed && item.completed === true) ||
+                (this.filter === TodoService.STATE.uncompleted && item.completed === false) ? true : false;
         })
     };
 
@@ -54,6 +61,6 @@ export default class TodoService {
     }
 
     setFilterState(value) {
-        this.filter = value;
+        this.filter = TodoService.STATE[value];
     }
 }
