@@ -1,6 +1,10 @@
 import store from 'store';
 import { observable, computed} from 'mobx';
 
+const ALL = Symbol('all');
+const COMPLETED = Symbol('completed');
+const UNCOMPLETED = Symbol('uncompleted');
+
 
 export default class TodoService {
     constructor() {
@@ -15,9 +19,9 @@ export default class TodoService {
     }
 
     static STATE = {
-        all: "all",
-        completed: "completed",
-        uncompleted: "uncompleted"
+        all: ALL,
+        completed: COMPLETED,
+        uncompleted: UNCOMPLETED
     };
 
     static NAMESPACE = 'todo::' // prefix 用于区分业务的前缀
