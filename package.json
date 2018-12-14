@@ -22,18 +22,21 @@
     "babel-preset-es2017": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "cryptiles": ">=4.1.2",
     "css-loader": "^0.28.0",
+    "hoek": ">=4.2.1",
     "html-webpack-plugin": "^2.28.0",
     "jest": "^19.0.2",
     "less": "^2.7.2",
     "less-loader": "^4.0.3",
+    "merge": ">=1.2.1",
     "react-hot-loader": "^3.0.0-beta.6",
     "source-map": "^0.5.6",
-    "source-map-loader": "^0.2.1",
+    "source-map-loader": "^0.2.4",
     "style-loader": "^0.16.1",
     "uglify-js": "^2.8.22",
     "webpack": "^2.4.1",
-    "webpack-dev-server": "^2.4.2"
+    "webpack-dev-server": "^2.11.3"
   },
   "dependencies": {
     "antd": "^2.9.1",
@@ -48,6 +51,9 @@
     "react-dom": "^15.5.4",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
-    "store": "^2.0.12"
+    "store": "^2.0.12",
+    "cryptiles": ">=4.1.2",
+    "hoek": ">=4.2.1",
+    "merge": ">=1.2.1"
   }
 }
