@@ -6,29 +6,47 @@ import {observer} from 'mobx-react';
 
 
 @observer
-export default class Root extends React.Component {
+class Root extends React.Component {
   constructor(props) {
     super(props);
+    this.handleCreate = this.handleCreate.bind(this)
+    this.handleCheckedChange = this.handleCheckedChange.bind(this)
+    this.handleCondChange = this.handleCondChange.bind(this)
   }
 
   handleCreate(event) {
-    this.props.service.create(event.target.value);
+    const { service } = this.props
+
+    service.create(event.target.value);
   }
 
   handleCheckedChange(event, key) {
-    this.props.service.setTodoState(event.target.checked, key);
+    const { service } = this.props
+
+    service.setTodoState(event.target.checked, key);
   }
 
   handleCondChange(value) {
-    this.props.service.setFilterState(value);
+    const { service } = this.props
+
+    service.setFilterState(value);
   }
 
   render() {
-    return <div>
-      <Create _={this.props.service.changed} onCreate={this.handleCreate.bind(this)} />
-      <Filter onFilter={this.handleCondChange.bind(this)}/>
-      {this.props.service.todos.
-      map(item => <Todo key={item.key} todo={item} onChange={this.handleCheckedChange.bind(this)} />)}
-    </div>;
+    const { service } = this.props
+
+    return (
+        <div>
+            <Create _={service.changed} onCreate={this.handleCreate} />
+            <Filter onFilter={this.handleCondChange}/>
+            {
+              service.todos.map(item => (
+                  <Todo key={item.key} todo={item} onChange={this.handleCheckedChange} />
+              ))
+            }
+        </div>
+    );
   }
 }
+
+export default Root
