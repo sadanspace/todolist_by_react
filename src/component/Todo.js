@@ -6,16 +6,22 @@ import 'antd/lib/row/style';
 import 'antd/lib/checkbox/style';
 import 'antd/lib/card/style';
 
+const Todo = ({ todo, onChange }) => {
+    const handleChange = (e) => onChange(e, todo.key)
 
-export default props => (
-    <Card style={{width:300}}>
-        <Row>
-            <Col span={4}>
-                <Checkbox checked={props.todo.completed} onChange={event => {props.onChange(event, props.todo.key)}}/>
-            </Col>
-            <Col span={20}>
-                {props.todo.title}
-            </Col>
-        </Row>
-    </Card>
-   );
+    return (
+        <Card style={{width:300}}>
+            <Row>
+                <Col span={4}>
+                    <Checkbox checked={todo.completed} onChange={handleChange} />
+                </Col>
+                <Col span={20}>
+                    {todo.title}
+                </Col>
+            </Row>
+        </Card>
+    )
+}
+
+
+export default Todo
